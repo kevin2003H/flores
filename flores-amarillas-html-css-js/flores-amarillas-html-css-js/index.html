@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flores Amarillas Para Ti</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #fff8e1, #f5f5dc);
+            animation: skyChange 20s infinite alternate;
+            z-index: -2;
+        }
+
+        .sun {
+            position: absolute;
+            top: 50px;
+            right: 10%;
+            width: 80px;
+            height: 80px;
+            background: #FFEB3B;
+            border-radius: 50%;
+            box-shadow: 0 0 50px #FFEB3B, 0 0 100px #FFEB3B;
+            animation: sunPulse 8s infinite alternate;
+        }
+
+        .message-container {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 253, 208, 0.9);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            z-index: 10;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .message-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2rem;
+            color: #8B4513;
+            margin-bottom: 15px;
+        }
+
+        .message-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #5a3b1d;
+            margin-bottom: 10px;
+        }
+
+        .hearts-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            background-color: #ffdd00;
+            height: 70px;
+            width: 70px;
+            transform: rotate(-45deg);
+            animation: beat 2.5s infinite;
+            box-shadow: 0 0 20px rgba(255, 222, 0, 0.7);
+            margin: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 5;
+        }
+
+        .heart:after, 
+        .heart:before {
+            content: "";
+            background-color: #ffdd00;
+            border-radius: 50%;
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            box-shadow: 0 0 20px rgba(255, 222, 0, 0.7);
+        }
+
+        .heart:after {
+            top: 0;
+            left: 35px;
+        }
+
+        .heart:before {
+            top: -35px;
+            left: 0;
+        }
+
+        .flower {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #ffeb3b;
+            border-radius: 50% 50% 45% 45%;
+            transform-origin: bottom center;
+            animation: sway 8s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        .flower:before {
+            content: "";
+            position: absolute;
+            width: 15px;
+            height: 60px;
+            background: linear-gradient(to bottom, #8BC34A, #4CAF50);
+            border-radius: 10px;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .petals {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: rotate 20s infinite linear;
+        }
+
+        .petal {
+            position: absolute;
+            width: 20px;
+            height: 30px;
+            background: #ffeb3b;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -15px;
+            transform-origin: center 60px;
+        }
+
+        .floating-flowers {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .floating-flower {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.7;
+            animation: floatAround 15s infinite linear;
+        }
+
+        .button-container {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+        }
+
+        .romantic-button {
+            background: linear-gradient(to bottom, #FFEB3B, #FFC107);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #5a3b1d;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .romantic-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.4);
+            background: linear-gradient(to bottom, #FFC107, #FFA000);
+        }
+
+        .romantic-button:active {
+            transform: translateY(1px);
+        }
+
+        .button-text {
+            margin-right: 10px;
+        }
+
+        /* Animations */
+        @keyframes beat {
+            0% { transform: scale(1) rotate(-45deg); }
+            50% { transform: scale(0.85) rotate(-45deg); }
+            100% { transform: scale(1) rotate(-45deg); }
+        }
+
+        @keyframes float {
+            0% { transform: translate(-50%, 0px); }
+            50% { transform: translate(-50%, -10px); }
+            100% { transform: translate(-50%, 0px); }
+        }
+
+        @keyframes skyChange {
+            0% { background: linear-gradient(to bottom, #fff8e1, #f5f5dc); }
+            50% { background: linear-gradient(to bottom, #e3f2fd, #bbdefb); }
+            100% { background: linear-gradient(to bottom, #fff8e1, #f5f5dc); }
+        }
+
+        @keyframes sunPulse {
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.9; }
+        }
+
+        @keyframes sway {
+            0% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+            100% { transform: rotate(-2deg); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, 50px) rotate(90deg); }
+            50% { transform: translate(60px, 0) rotate(180deg); }
+            75% { transform: translate(30px, -50px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            .message-title {
+                font-size: 1.8rem;
+            }
+            
+            .message-text {
+                font-size: 1rem;
+            }
+            
+            .romantic-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="sun"></div>
+    
+    <div class="message-container">
+        <h1 class="message-title">Para Mi Amor</h1>
+        <p class="message-text">Te amo con todo lo que soy...</p>
+        <p class="message-text">Aunque en esta fecha no pueda darte tus flores físicas, te hice estas para que las tengas por siempre.</p>
+        <p class="message-text">Jamás olvides que eres lo más lindo de mi vida y estaré aquí para ti siempre.</p>
+    </div>
+    
+    <div class="hearts-container">
+        <div class="heart"></div>
+    </div>
+    
+    <div class="floating-flowers">
+        <!-- Floating flowers will be generated by JS -->
+    </div>
+    
+    <div class="button-container">
+        <button class="romantic-button">
+            <span class="button-text">Descubre tu sorpresa</span>
+            <span>💛</span>
+        </button>
+    </div>
+
+    <script>
+        // Create floating flowers
+        const floatingFlowers = document.querySelector('.floating-flowers');
+        const flowerSymbols = ['🌼', '🌻', '💮', '🌸'];
+        
+        for (let i = 0; i < 15; i++) {
+            const flower = document.createElement('div');
+            flower.className = 'floating-flower';
+            flower.textContent = flowerSymbols[Math.floor(Math.random() * flowerSymbols.length)];
+            
+            // Random position and animation delay
+            flower.style.left = `${Math.random() * 100}%`;
+            flower.style.top = `${Math.random() * 100}%`;
+            flower.style.animationDelay = `${Math.random() * 5}s`;
+            flower.style.animationDuration = `${15 + Math.random() * 10}s`;
+            
+            floatingFlowers.appendChild(flower);
+        }
+        
+        // Add click event to button
+        document.querySelector('.romantic-button').addEventListener('click', function() {
+            window.location.href = 'index2.html';
+        });
+    </script>
+</body>
+</html>
